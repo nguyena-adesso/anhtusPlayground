@@ -1,0 +1,368 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>Urban Energy </title>
+
+    <!-- Bootstrap -->
+    <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <!-- Font Awesome -->
+    <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
+    <!-- NProgress -->
+    <link href="/vendors/nprogress/nprogress.css" rel="stylesheet"/>
+    <!-- iCheck -->
+    <link href="/vendors/iCheck/skins/flat/green.css" rel="stylesheet"/>
+
+    <!-- bootstrap-progressbar -->
+    <link href="/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet"/>
+    <!-- JQVMap -->
+    <link href="/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+    <!-- bootstrap-daterangepicker -->
+    <link href="/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet"/>
+
+    <!--Chart.js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+    <script src="/js/charts/utils.js"></script>
+    <script src="/js/charts/dataOverview.js"></script>
+    <!--for vertical line "NOW"-->
+    <script src="https://github.com/chartjs/Chart.js/releases/download/v2.6.0/Chart.bundle.min.js"></script>
+    <!-- Custom Theme Style -->
+    <link href="/css/custom/custom.min.css" rel="stylesheet"/>
+    <link href="/css/barchartStyle.css" rel="stylesheet"/>
+
+  </head>
+
+  <body class="nav-md" onload="connect()">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+            </div>
+
+            <div class="clearfix"></div>
+
+            <!-- menu profile quick info -->
+            <div class="profile clearfix">
+              <div class="profile_pic">
+                <img src="/images/Urban_Energy_Logo.svg" alt="..." class=""/>
+              </div>
+
+            </div>
+            <!-- /menu profile quick info -->
+
+            <br />
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <h3>General</h3>
+                <ul class="nav side-menu">
+                  <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="index.html">Dashboard</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- /sidebar menu -->
+
+          </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+          <div class="nav_menu">
+            <nav>
+              <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+              </div>
+
+            </nav>
+          </div>
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <!-- top tiles -->
+          <div class="row tile_count">
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-car"></i> Belegte Ladeslots</span>
+              <div class="count" id="numberOfConnectedCars">9</div>
+              <span class="count_bottom"><!--<i class="green">4% </i> From last Week--></span>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-clock-o"></i> &Oslash; aktuelle Ladeleistung</span>
+              <div class="count">22</div><em>kW</em>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-bolt"></i> Aktuelle Gesamterzeugung</span>
+              <div class="count green">5.000</div>
+              <span class="count_bottom">kW<!--<i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week--></span>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-lightbulb-o"></i> Aktueller Gesamtverbrauch</span>
+              <div class="count">3.067</div>
+              <span class="count_bottom">kW<!--<i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week--></span>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-plug"></i> Saldo Erzeugung-Verbrauch</span>
+              <div class="count">1.933</div>
+              <span class="count_bottom">kW<!--<i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week--></span>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-building-o"></i> Verbrauch Gewerbe</span>
+              <div class="count">7,325</div>
+              <span class="count_bottom">kW<!--<i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week--></span>
+            </div>
+          </div>
+          <!-- /top tiles -->
+
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="dashboard_graph">
+                <div class="row x_title">
+                  <div class="col-md-6">
+                    <h3>Im &Uuml;berblick</h3>
+                    <em>Verbrauch und Erzeugung</em>
+                  </div>
+                  <div class="col-md-6">
+                  </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <canvas id="canvas"></canvas>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+          </div>
+
+          <br/>
+
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="x_panel ">
+                <div class="row x_title">
+                  <h2>Ladeverbrauch pro Slot</h2>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <canvas id="bar-chart-vertical"></canvas>
+                  <div class="table-responsive">
+                  <table class="table fixed">
+                    <thead>
+                    <tr class="row">
+                      <td class="column-fixed"></td>
+                      <td class="above">1</td>
+                      <td class="above">2</td>
+                      <td class="above">3</td>
+                      <td class="above">4</td>
+                      <td class="above">5</td>
+                      <td class="above">6</td>
+                      <td class="above">7</td>
+                      <td class="above">8</td>
+                      <td class="above">9</td>
+                      <td class="above">10</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="row">
+                      <td class="column-fixed"></td>
+                      <td><i class="fa fa-bolt fa-2x yellow"></i></td>
+                      <td><i class="fa fa-bolt fa-2x yellow"></i></td>
+                      <td><i class="fa fa-pause-circle fa-2x red"></i></td>
+                      <td><i class="fa fa-bolt fa-2x yellow"></i></td>
+                      <td><i class="fa fa-bolt fa-2x yellow"></i></td>
+                      <td><i class="fa fa-check fa-2x green"></i></td>
+                      <td><i class="fa fa-bolt fa-2x yellow"></i></td>
+                      <td><i class="fa fa-plug fa-2x grey"></i></td>
+                      <td><i class="fa fa-pause-circle fa-2x red"></i></td>
+                      <td><i class="fa fa-bolt fa-2x yellow"></i></td>
+                    </tr>
+                    <tr class="row">
+                      <td class="column-fixed"></td>
+                      <td class="tiny">7,4 kW</td>
+                      <td class="tiny">3,7 kW</td>
+                      <td class="tiny">stop</td>
+                      <td class="tiny">8 kW</td>
+                      <td class="tiny">17 kW</td>
+                      <td class="tiny">fertig</td>
+                      <td class="tiny">3,8 kW</td>
+                      <td class="tiny">frei</td>
+                      <td class="tiny">stop</td>
+                      <td class="tiny">6 kW</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                  </div>
+              </div>
+              </div>
+            </div>
+
+            <!-- start of weather widget -->
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h2>Wetter </h2>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="temperature"><b>Monday</b>, 07:30 AM
+                        <span>F</span>
+                        <span><b>C</b></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="weather-icon">
+                        <canvas height="84" width="84" id="partly-cloudy-day"></canvas>
+                      </div>
+                    </div>
+                    <div class="col-sm-8">
+                      <div class="weather-text">
+                          <h2> Berlin</h2>
+                          <p><i>Partly Cloudy Day</i></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="weather-text pull-right">
+                      <h3 class="degrees">13</h3>
+                    </div>
+                  </div>
+
+                  <div class="clearfix"></div>
+
+                  <div class="row weather-days">
+                    <div class="col-sm-2">
+                      <div class="daily-weather">
+                        <h2 class="day">Mon</h2>
+                        <h3 class="degrees">5</h3>
+                        <canvas id="clear-day" width="32" height="32"></canvas>
+                        <h5>15 <i>km/h</i></h5>
+                      </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <div class="daily-weather">
+                        <h2 class="day">Tue</h2>
+                        <h3 class="degrees">8</h3>
+                        <canvas height="32" width="32" id="rain"></canvas>
+                        <h5>12 <i>km/h</i></h5>
+                      </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <div class="daily-weather">
+                        <h2 class="day">Wed</h2>
+                        <h3 class="degrees">7</h3>
+                        <canvas height="32" width="32" id="snow"></canvas>
+                        <h5>14 <i>km/h</i></h5>
+                      </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <div class="daily-weather">
+                        <h2 class="day">Thu</h2>
+                        <h3 class="degrees">8</h3>
+                        <canvas height="32" width="32" id="sleet"></canvas>
+                        <h5>15 <i>km/h</i></h5>
+                      </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <div class="daily-weather">
+                        <h2 class="day">Fri</h2>
+                        <h3 class="degrees">8</h3>
+                        <canvas height="32" width="32" id="wind"></canvas>
+                        <h5>11 <i>km/h</i></h5>
+                      </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <div class="daily-weather">
+                        <h2 class="day">Sat</h2>
+                        <h3 class="degrees">6</h3>
+                        <canvas height="32" width="32" id="cloudy"></canvas>
+                        <h5>10 <i>km/h</i></h5>
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end of weather widget -->
+          </div>
+        </div>
+      </div>
+    </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+
+    <!-- lineChart.js-->
+    <script src="/js/lineChart.js"></script>
+    <!-- barChart.js-->
+    <script src="/js/barChart.js"></script>
+    <!-- jQuery -->
+    <script src="/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="/vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <script src="/vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="/vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="/vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="/vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="/vendors/Flot/jquery.flot.js"></script>
+    <script src="/vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="/vendors/Flot/jquery.flot.time.js"></script>
+    <script src="/vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="/vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="/vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="/vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="/vendors/moment/min/moment.min.js"></script>
+    <script src="/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="/js/custom/custom.min.js"></script>
+
+  <!--STOMP und sockjs -->
+	<script src="/js/sockjs.min.js"></script>
+	<script src="/js/stomp.min.js"></script>
+	<script src="/js/main.js"></script>
+
+  </body>
+</html>

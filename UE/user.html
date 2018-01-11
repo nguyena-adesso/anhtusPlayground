@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <title>Urban Energy</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/vendors/bootstrap/css/bootstrap.css" rel="stylesheet"/>
+    <!-- Custom styles for this template -->
+    <link href="/css/logo-nav.css" rel="stylesheet"/>
+    <!-- index css -->
+    <link href="/css/user.css" rel="stylesheet"/>
+    <!-- Font Awesome -->
+    <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
+
+</head>
+
+<body onload="connectUser()">
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="/images/Urban_Energy_Logo.svg" width="100" height="70" alt="Urban Energy Logo"/>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+    <h5 class="mt-5">Fahrzeugdaten</h5>
+    <div id="model" style="display: none;">Modell: BMW i3</div>
+    <div id="reichweite" style="display: none;">Reichweite: 200-300 km</div>
+    <div id="capacity" style="display: none;">Batterie: 33 kWh</div>
+    <div id="chargingState" style="display: none;">Akkustand: 30%</div>
+</div>
+<!-- /.container -->
+
+<div class="container">
+    <h5 class="mt-5">Auf wie viel Prozent soll der Akku geladen werden?</h5>
+
+    <div class="slidecontainer">
+        <input type="range" min="1" max="100" class="slider" id="myRange" onchange="calculatePrice()" style="display: none;"/>
+        <p>Akku: <span id="demo" style="display: none;"></span>%</p>
+    </div>
+    <!-- <input class="btn" type="button" value="Preis berechnen" onclick="calculatePrice()"/> -->
+    <!--<div id="price" style="margin-top: 2%; color: #9f1130; text-align: center; font-size: 2em"></div>-->
+</div>
+<div class="container-fluid">
+    <div class="row row-ignoreMargin">
+        <div class="col column-expand">
+            <div onclick="allCallouts()" class="bs-callout">
+                <h4>5,03 €</h4>
+                <p>bis 17:25 Uhr</p>
+            </div>
+        </div>
+        <div class="col column-expand">
+            <div onclick="allCallouts()" class="bs-callout">
+                <h4>4,92 €</h4>
+                <p>bis 17:50 Uhr</p>
+            </div>
+        </div>
+    </div>
+    <div class="row row-ignoreMargin">
+        <div class="col column-expand">
+            <div onclick="allCallouts()" class="bs-callout">
+                <h4>4,83 €</h4>
+                <p>bis 18:00 Uhr</p>
+            </div>
+        </div>
+        <div class="col column-expand">
+            <div onclick="allCallouts()" class="bs-callout">
+                <h4>4,22 €</h4>
+                <p>bis 18:25 Uhr</p>
+            </div>
+        </div>
+    </div>
+    <div class="row row-ignoreMargin">
+        <div class="col column-expand">
+            <div onclick="allCallouts()" class="bs-callout">
+                <h4>3,84 €</h4>
+                <p>bis 18:45 Uhr</p>
+            </div>
+        </div>
+        <div class="col column-expand">
+            <div onclick="allCallouts()" class="bs-callout">
+                <h4>3,32 €</h4>
+                <p>bis 19:00 Uhr</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- The Modal -->
+    <div id="modal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Buchen</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Sie haben folgendes Angebot zur Buchung ausgewählt: </p>
+                <ul style="list-style-type:none">
+                    <li>
+                        <!--<i class="fa fa-battery-empty"></i>  Akku: 80%-->
+                        <canvas id="circular-loader"></canvas>
+                    </li>
+                    <li><i class="fa fa-clock-o"></i>  18:45 Uhr</li>
+                    <li><i class="fa fa-eur"></i> 5,45€</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button class="btn">Jetzt buchen</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- Bootstrap core JavaScript -->
+<script src="/vendors/jquery/jquery.min.js"></script>
+<script src="/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!--<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>-->
+
+<!-- STOMP und sockjs -->
+<script src="/js/sockjs.min.js"></script>
+<script src="/js/stomp.min.js"></script>
+<script src="/js/user.js"></script>
+<script src="/js/main.js"></script>
+
+
+<!--slider-->
+<script src="/js/slider.js"></script>
+
+<!--modal-->
+<script src="/js/modal.js"></script>
+
+<!--circular-loader-->
+<script src="/js/circularLoader.js"></script>
+
+</body>
+</html>

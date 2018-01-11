@@ -1,0 +1,19 @@
+body{
+background-color: #2A3F54;
+}
+
+.vertical-offset-100{
+    padding-top:100px;
+}
+
+fieldset#login{
+border: none;
+margin-top:35px;
+padding:0px;
+}
+
+.center {
+     margin: auto;
+     width: 50%;
+     padding: 10px;
+}
